@@ -1,0 +1,14 @@
+pipeline {
+   agent { label 'OPENJDK-11' }
+   stages {
+     stage('vcs')
+         { steps { git url :'https://github.com/Sammetanagarjuna/spring-petclinic.git', branch:'REL_INT_1'}
+          }
+     stage('build')
+          { steps {sh 'mvn package'}
+		    }
+     stage('archive results')
+          { steps { junit '**/surefire-reports/*.xml'}
+		    }
+	}
+}
